@@ -3,10 +3,15 @@ package com.example.homework2;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.volley.*;
+import com.android.volley.toolbox.*;
+
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -27,23 +32,22 @@ public class MainActivity extends Activity implements OnItemClickListener {
 	public void loadData()	
 	{		
 		this.dataListView = new ArrayList<ItemListView>();
-		this.dataListView.add(new ItemListView(R.drawable.sun,		"Солнце", "http://ru.wikipedia.org/w/index.php?title=%D0%A1%D0%BE%D0%BB%D0%BD%D1%86%D0%B5&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.mercury,	"Меркурий", "http://ru.wikipedia.org/w/index.php?title=%D0%9C%D0%B5%D1%80%D0%BA%D1%83%D1%80%D0%B8%D0%B9&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.venus,	"Венера", "http://ru.wikipedia.org/w/index.php?title=%D0%92%D0%B5%D0%BD%D0%B5%D1%80%D0%B0&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.earth,	"Земля", "http://ru.wikipedia.org/w/index.php?title=%D0%97%D0%B5%D0%BC%D0%BB%D1%8F&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.mars,		"Марс", "http://ru.wikipedia.org/w/index.php?title=%D0%9C%D0%B0%D1%80%D1%81&printable=yes"));	
-		this.dataListView.add(new ItemListView(R.drawable.ceres,	"Церера", "http://ru.wikipedia.org/w/index.php?title=%D0%A6%D0%B5%D1%80%D0%B5%D1%80%D0%B0&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.jupiter,	"Юпитер", "http://ru.wikipedia.org/w/index.php?title=%D0%AE%D0%BF%D0%B8%D1%82%D0%B5%D1%80&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.saturn,	"Сатурн", "http://ru.wikipedia.org/w/index.php?title=%D0%A1%D0%B0%D1%82%D1%83%D1%80%D0%BD&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.uranus,	"Уран", "http://ru.wikipedia.org/w/index.php?title=%D0%A3%D1%80%D0%B0%D0%BD_(%D0%BF%D0%BB%D0%B0%D0%BD%D0%B5%D1%82%D0%B0)&printable=yes"));	
-		this.dataListView.add(new ItemListView(R.drawable.neptune,	"Нептун", "http://ru.wikipedia.org/w/index.php?title=%D0%9D%D0%B5%D0%BF%D1%82%D1%83%D0%BD&printable=yes"));
-		this.dataListView.add(new ItemListView(R.drawable.pluto,	"Плутон", "http://ru.wikipedia.org/w/index.php?title=%D0%9F%D0%BB%D1%83%D1%82%D0%BE%D0%BD&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.sun,		"http://goo.gl/4coSsF",	"Солнце", 	"http://ru.wikipedia.org/w/index.php?title=%D0%A1%D0%BE%D0%BB%D0%BD%D1%86%D0%B5&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.mercury,	"http://goo.gl/j7lCg5",	"Меркурий",	"http://ru.wikipedia.org/w/index.php?title=%D0%9C%D0%B5%D1%80%D0%BA%D1%83%D1%80%D0%B8%D0%B9&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.venus,	"http://goo.gl/1LgvWz",	"Венера", 	"http://ru.wikipedia.org/w/index.php?title=%D0%92%D0%B5%D0%BD%D0%B5%D1%80%D0%B0&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.earth,	"http://goo.gl/6XENai",	"Земля", 	"http://ru.wikipedia.org/w/index.php?title=%D0%97%D0%B5%D0%BC%D0%BB%D1%8F&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.mars,		"http://goo.gl/pikxLU",	"Марс", 	"http://ru.wikipedia.org/w/index.php?title=%D0%9C%D0%B0%D1%80%D1%81&printable=yes"));	
+		this.dataListView.add(new ItemListView(R.drawable.ceres,	"http://goo.gl/5OJDOq",	"Церера", 	"http://ru.wikipedia.org/w/index.php?title=%D0%A6%D0%B5%D1%80%D0%B5%D1%80%D0%B0&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.jupiter,	"http://goo.gl/drJ2vo",	"Юпитер", 	"http://ru.wikipedia.org/w/index.php?title=%D0%AE%D0%BF%D0%B8%D1%82%D0%B5%D1%80&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.saturn,	"http://goo.gl/CT8YK7",	"Сатурн", 	"http://ru.wikipedia.org/w/index.php?title=%D0%A1%D0%B0%D1%82%D1%83%D1%80%D0%BD&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.uranus,	"http://goo.gl/EowQYC",	"Уран", 	"http://ru.wikipedia.org/w/index.php?title=%D0%A3%D1%80%D0%B0%D0%BD_(%D0%BF%D0%BB%D0%B0%D0%BD%D0%B5%D1%82%D0%B0)&printable=yes"));	
+		this.dataListView.add(new ItemListView(R.drawable.neptune,	"http://goo.gl/LTYXiA",	"Нептун", 	"http://ru.wikipedia.org/w/index.php?title=%D0%9D%D0%B5%D0%BF%D1%82%D1%83%D0%BD&printable=yes"));
+		this.dataListView.add(new ItemListView(R.drawable.pluto,	"http://goo.gl/Ux0CzD",	"Плутон", 	"http://ru.wikipedia.org/w/index.php?title=%D0%9F%D0%BB%D1%83%D1%82%D0%BE%D0%BD&printable=yes"));
 
 		
 		ItemListViewAdapter dataAdapter = new ItemListViewAdapter(this, this.dataListView);
 		this.lvPlaneta.setAdapter(dataAdapter);		
 		this.lvPlaneta.setOnItemClickListener(this);
-
 	}
 	
 	
@@ -68,8 +72,7 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		
 		if(parent.getId() == R.id.lvPlaneta){
 			
-			ItemListView item = this.dataListView.get(position);
-			
+			ItemListView item = this.dataListView.get(position);			
 			Intent intent = new Intent(this, WikiActivity.class);
 			intent.putExtra("url", item.getUrl());
 			startActivity(intent);
@@ -84,10 +87,18 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		private String text;
 		private String url;
 		
-		public ItemListView(int _img_res, String _text, String _url){
-			this.img_res = _img_res;
-			this.text = _text;
-			this.url = _url;
+		private String img_url;	
+		private boolean img_url_download; 
+		private Bitmap bmp_url;
+	
+		
+		public ItemListView(int _img_res, String _img_url, String _text, String _url){
+			this.img_res =	_img_res;
+			this.text = 	_text;
+			this.url = 		_url;
+			this.img_url =	_img_url;
+			
+			this.img_url_download = false;
 		}
 		
 		public int getImgRes(){
@@ -104,7 +115,7 @@ public class MainActivity extends Activity implements OnItemClickListener {
 	}
 	
 	private class ItemListViewAdapter extends BaseAdapter{
-
+		String URL_IMG = "";
 		private Activity activity;
 		private List<ItemListView> listData;
 		
@@ -112,8 +123,37 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		{
 			super();
 			this.activity = _activity;
-			this.listData = _listData;
-		}		
+			this.listData = _listData;			
+		}	
+		
+		/**
+		 * Загрузка изображений указаных в img_url
+		 */
+		private void LoadImgWeb(final ItemListView item, final ImageView imageView){
+			if(item.img_url_download){
+				imageView.setImageBitmap(item.bmp_url) ;
+				return;
+			}
+				
+			
+			ImageLoader imageLoader = new ImageLoader(Volley.newRequestQueue(getApplicationContext()), new BitmapLruCache(200));
+			imageLoader.get(item.img_url, new ImageLoader.ImageListener() {
+
+				@Override  
+				public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {						
+						item.bmp_url = imageContainer.getBitmap();
+						item.img_url_download = true;
+						imageView.setImageBitmap(item.bmp_url) ;									  
+				  }
+
+				@Override
+				public void onErrorResponse(VolleyError volleyError) {
+					  Toast.makeText(getApplicationContext(), "onErrorResponse - \n" + item.img_url, Toast.LENGTH_LONG).show();
+				  }			
+			});
+			
+			
+		}
 		
 		@Override
 		public int getCount() {
@@ -132,26 +172,39 @@ public class MainActivity extends Activity implements OnItemClickListener {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View lvElem;
+			ViewHolder vhElem;
 		    
 			if( convertView == null ){
 		        LayoutInflater inflater = activity.getLayoutInflater();
-		        lvElem = inflater.inflate(R.layout.item_list, null);
+		        convertView = inflater.inflate(R.layout.item_list, null);
+		        
+				vhElem = new ViewHolder();			
+				vhElem.imgRes =	(ImageView)convertView.findViewById(R.id.imgRes);
+				vhElem.text = 	(TextView)convertView.findViewById(R.id.text);
+			    convertView.setTag(vhElem);
+			    
 		    } else {
-		    	lvElem = convertView;
-		    }
+		    	vhElem = (ViewHolder)convertView.getTag();
+		    }		   
+			
+			// Получаем данные
+			ItemListView item = this.listData.get(position);   	
+         
+			// Помещаем данные 
+			this.LoadImgWeb(item, vhElem.imgRes);
+		
+			if(item.bmp_url == null)
+				vhElem.imgRes.setImageResource(item.getImgRes());			
+			vhElem.text.setText(item.getText());
 		    
-		    ImageView _iv = (ImageView)lvElem.findViewById(R.id.imgRes);
-		    TextView _text = (TextView)lvElem.findViewById(R.id.text);
-		    
-		    ItemListView item = this.listData.get(position);
-		    
-		     _iv.setImageResource(item.getImgRes());
-		     _text.setText(item.getText());
-		    
-		    return lvElem;
+			return convertView;
 		}
 		
 	}
+	
+	static class ViewHolder {
+        public ImageView imgRes;
+        public TextView text;
+    }
 
 }
